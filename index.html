@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Clock</title>
+    <style>
+        .clock {
+            width: 300px;
+            height: 300px;
+            margin: 50px auto;
+            display: block;
+        }
+        .hand {
+            transform-origin: 50% 50%;
+            transition: transform 0.5s cubic-bezier(0.4, 2.3, 0.3, 1);
+        }
+    </style>
+</head>
+<body>
+    <svg class="clock" viewBox="0 0 100 100">
+        <!-- Clock face -->
+        <circle cx="50" cy="50" r="48" fill="white" stroke="black" stroke-width="2" />
+        <!-- Hour marks -->
+        <g id="hour-marks">
+            <line x1="50" y1="5" x2="50" y2="10" stroke="black" stroke-width="2" />
+            <!-- Repeat for other hour marks -->
+            <line x1="50" y1="90" x2="50" y2="95" stroke="black" stroke-width="2" />
+            <line x1="5" y1="50" x2="10" y2="50" stroke="black" stroke-width="2" />
+            <line x1="90" y1="50" x2="95" y2="50" stroke="black" stroke-width="2" />
+            <!-- Add more marks if needed -->
+        </g>
+        <!-- Hands -->
+        <line id="hour-hand" class="hand" x1="50" y1="50" x2="50" y2="30" stroke="black" stroke-width="2" />
+        <line id="minute-hand" class="hand" x1="50" y1="50" x2="50" y2="20" stroke="black" stroke-width="2" />
+        <line id="second-hand" class="hand" x1="50" y1="50" x2="50" y2="15" stroke="red" stroke-width="1" />
+        <!-- Center circle -->
+        <circle cx="50" cy="50" r="1" fill="black" />
+    </svg>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const seconds = now.getSeconds();
+            const minutes = now.getMinutes();
+            const hours = now.getHours();
+
+            const secondDegrees = ((seconds / 60) * 360) + 90;
+            const minuteDegrees = ((minutes / 60) * 360) + ((seconds / 60) * 6) + 90;
+            const hourDegrees = ((hours / 12) * 360) + ((minutes / 60) * 30) + 90;
+
+            document.getElementById('second-hand').style.transform = `rotate(${secondDegrees}deg)`;
+            document.getElementById('minute-hand').style.transform = `rotate(${minuteDegrees}deg)`;
+            document.getElementById('hour-hand').style.transform = `rotate(${hourDegrees}deg)`;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
