@@ -46,10 +46,17 @@ body {
     transition: transform 0.5s cubic-bezier(0.4, 2.3, 0.3, 1);
 }
 
+#hour-hand-group {
+    transform-origin: 50% 50%;
+}
+
 .hour-hand {
     stroke: black;
     stroke-width: 4;
-    z-index: 1;
+}
+
+#minute-hand-group {
+    transform-origin: 50% 50%;
 }
 
 .minute-hand {
@@ -57,10 +64,29 @@ body {
     stroke-width: 4;
 }
 
+.minute-hand-triangle{
+
+}
+
+#second-hand-group {
+    transform-origin: 50% 50%;
+}
+
 .second-hand {
     stroke: #aa0101;
     stroke-width: 2;
-    z-index: 2;
+}
+
+#second-hand-circle {
+    fill: white;  /* Inner fill of the circle (hollowed out) */
+    stroke: #aa0101;  /* Border color of the circle */
+    stroke-width: 2.5;
+}
+
+#second-hand-tip {
+    fill: white;  /* Inner fill of the circle (hollowed out) */
+    stroke: #aa0101;  /* Border color of the circle */
+    stroke-width: 1;
 }
 
 .center-dot {
