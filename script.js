@@ -4,13 +4,20 @@ function updateClock() {
     const minutes = now.getMinutes();
     const hours = now.getHours();
 
-    const secondDegrees = ((seconds / 60) * 360) + 90;
-    const minuteDegrees = ((minutes / 60) * 360) + ((seconds / 60) * 6) + 90;
-    const hourDegrees = ((hours / 12) * 360) + ((minutes / 60) * 30) + 90;
+    const secondDegrees = ((seconds / 60) * 360);
+    const minuteDegrees = ((minutes + seconds / 60) / 60) * 360;
+    const hourDegrees = ((hours + minutes / 60) / 12) * 360;
 
     document.getElementById('second-hand').style.transform = `rotate(${secondDegrees}deg)`;
     document.getElementById('minute-hand').style.transform = `rotate(${minuteDegrees}deg)`;
     document.getElementById('hour-hand').style.transform = `rotate(${hourDegrees}deg)`;
+
+
+    const hoursString = String(hours).padStart(2, '0');
+    const minutesString = String(minutes).padStart(2, '0');
+    const secondsString = String(seconds).padStart(2, '0');
+    const timeString = `${hoursString}: ${minutesString}: ${secondsString}`;
+    document.getElementById('digital-clock').textContent = timeString;
 }
 
 setInterval(updateClock, 1000);

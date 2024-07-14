@@ -1,6 +1,21 @@
+:root {
+    --clock-size: 300px;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #333333;
+}
+
 .clock-container {
-    width: 300px;
-    height: 300px;
+    position: relative;
+
+    width: var(--clock-size);
+    height: var(--clock-size);
     margin: 50px auto;
     display: block;
 }
@@ -18,6 +33,11 @@
 
 .hour-mark {
     stroke: black;
+    stroke-width: 4;
+}
+
+.five-minute-mark {
+    stroke: black;
     stroke-width: 2;
 }
 
@@ -28,19 +48,30 @@
 
 .hour-hand {
     stroke: black;
-    stroke-width: 2;
+    stroke-width: 4;
+    z-index: 1;
 }
 
 .minute-hand {
-    stroke: black;
-    stroke-width: 2;
+    stroke: #333333;
+    stroke-width: 4;
 }
 
 .second-hand {
-    stroke: red;
-    stroke-width: 1;
+    stroke: #aa0101;
+    stroke-width: 2;
+    z-index: 2;
 }
 
 .center-dot {
     fill: black;
 }
+
+.digital-clock{
+    margin-top: 20px;
+    color:#66cd00;
+    font-family:Arial;
+    font-size:25px;
+    text-align: center;
+}
+
