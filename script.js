@@ -1,7 +1,3 @@
-let previousSeconds = new Date().getSeconds();
-
-
-
 function updateClock() {
     const now = new Date();
     const seconds = now.getSeconds();
@@ -24,7 +20,6 @@ function updateClock() {
     document.getElementById('second-hand-group').style.transform = `rotate(${secondDegrees}deg)`;
     document.getElementById('minute-hand-group').style.transform = `rotate(${minuteDegrees}deg)`;
     document.getElementById('hour-hand-group').style.transform = `rotate(${hourDegrees}deg)`;
-
 
     const hoursString = String(hours).padStart(2, '0');
     const minutesString = String(minutes).padStart(2, '0');
