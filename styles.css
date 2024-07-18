@@ -101,3 +101,21 @@ body {
     text-align: center;
 }
 
+
+/*秒表*/
+.stopwatch {
+    margin-top: 20px;
+    text-align: center;
+    color:white;
+}
+
+.stopwatch-display {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.stopwatch-buttons button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
