@@ -69,7 +69,7 @@ function stopStopwatch() {
 function resetStopwatch() {
     clearInterval(stopwatchInterval);
     stopwatchElapsedTime = 0;
-    document.getElementById('stopwatch-display').textContent = '00:00:00';
+    document.getElementById('stopwatch-display').textContent = '00:00:00:00';
 }
 
 function updateStopwatch() {
