@@ -110,3 +110,43 @@ document.getElementById('minute-hand-group').addEventListener('mousedown', start
 document.getElementById('second-hand-group').addEventListener('mousedown', startDrag);
 document.addEventListener('mousemove', drag);
 document.addEventListener('mouseup', stopDrag);
+
+
+// 秒表功能
+let stopwatchInterval;
+let stopwatchStartTime;
+let stopwatchElapsedTime = 0;
+
+function startStopwatch() {
+    stopwatchStartTime = Date.now() - stopwatchElapsedTime;
+    stopwatchInterval = setInterval(updateStopwatch, 10); // 每 10 毫秒更新一次
+}
+
+function stopStopwatch() {
+    clearInterval(stopwatchInterval);
+}
+
+function resetStopwatch() {
+    clearInterval(stopwatchInterval);
+    stopwatchElapsedTime = 0;
+    document.getElementById('stopwatch-display').textContent = '00:00:00:00';
+}
+
+function updateStopwatch() {
+    stopwatchElapsedTime = Date.now() - stopwatchStartTime;
+    const totalSeconds = Math.floor(stopwatchElapsedTime / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    const centiseconds = Math.floor((stopwatchElapsedTime % 1000) / 10); // 百分之一秒
+
+    const hoursString = String(hours).padStart(2, '0');
+    const minutesString = String(minutes).padStart(2, '0');
+    const secondsString = String(seconds).padStart(2, '0');
+    const centisecondsString = String(centiseconds).padStart(2, '0');
+    document.getElementById('stopwatch-display').textContent = `${hoursString}:${minutesString}:${secondsString}:${centisecondsString}`;
+}
+
+document.getElementById('start-stopwatch').addEventListener('click', startStopwatch);
+document.getElementById('stop-stopwatch').addEventListener('click', stopStopwatch);
+document.getElementById('reset-stopwatch').addEventListener('click', resetStopwatch);
