@@ -12,26 +12,36 @@ function updateClock() {
     //用差值来保持指针继续转动
     if (customTime) {
         const currentTime = Date.now();
-        const deltaTime = currentTime - lastUpdateTime; 
-        customTime += deltaTime; 
+        const deltaTime = currentTime - lastUpdateTime;
+        customTime += deltaTime;
         now = new Date(customTime);
-        lastUpdateTime = currentTime; 
+        lastUpdateTime = currentTime;
     } else {
         now = new Date();
-        lastUpdateTime = now.getTime(); 
+        lastUpdateTime = now.getTime();
     }
+    // 获取当前的秒数并加上毫秒数，得到更精确的秒数(得到小数)(为了秒针运动的平滑)
     const secondsPlusMilliseconds = now.getSeconds() + now.getMilliseconds() / 1000;
+    // 获取当前的分钟数
     const minutes = now.getMinutes();
+    // 获取当前的小时数
     const hours = now.getHours();
 
+    // 将秒数转换成度数 (每60秒是360度)
     const secondDegrees = ((secondsPlusMilliseconds / 60) * 360);
+    // 将分钟数转换成度数 (每60分钟是360度)
     const minuteDegrees = ((minutes + secondsPlusMilliseconds / 60) / 60) * 360;
+    // 将小时数转换成度数 (每12小时是360度)
     const hourDegrees = ((hours + minutes / 60) / 12) * 360;
 
+    // 设置秒针的旋转角度
     document.getElementById('second-hand-group').style.transform = `rotate(${secondDegrees}deg)`;
+    // 设置分针的旋转角度
     document.getElementById('minute-hand-group').style.transform = `rotate(${minuteDegrees}deg)`;
+    // 设置时针的旋转角度
     document.getElementById('hour-hand-group').style.transform = `rotate(${hourDegrees}deg)`;
 
+    // 将小时、分钟和秒数转换成字符串，并且确保是两位数格式（例如：09:05:08）
     const hoursString = String(hours).padStart(2, '0');
     const minutesString = String(minutes).padStart(2, '0');
     const secondsString = String(Math.floor(secondsPlusMilliseconds)).padStart(2, '0');
@@ -75,9 +85,9 @@ function drag(e) {
         //遇到问题：为什么拖拽分针到第三象限的时候时针会疯狂转动，而且分针会剧烈抖动
         //原因：
 
-        let angle = currentAngle - baseAngle ; // 计算拖拽的角度
+        let angle = currentAngle - baseAngle; // 计算拖拽的角度
         angle = (angle + 360) % 360;
-        
+
         draggedElement.style.transform = `rotate(${angle}deg)`;
 
         // 根据拖拽的角度计算时间
