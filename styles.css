@@ -6,6 +6,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     height: 100vh;
     margin: 0;
     background-color: #333333;
@@ -118,4 +119,23 @@ body {
     margin: 5px;
     padding: 10px 20px;
     font-size: 16px;
+}
+
+
+/*通过输入来调整时间*/
+#input{
+    display: flex;
+    margin: 50px 0 50px 0;
+}
+
+#input>*{
+    margin: 0 10px;
+}
+
+#input>span{
+    color: white;
+}
+
+#input>input{
+    width: 50px;
 }

@@ -160,3 +160,20 @@ function updateStopwatch() {
 document.getElementById('start-stopwatch').addEventListener('click', startStopwatch);
 document.getElementById('stop-stopwatch').addEventListener('click', stopStopwatch);
 document.getElementById('reset-stopwatch').addEventListener('click', resetStopwatch);
+
+// 参数输入设置时间
+document.getElementById('input').addEventListener('submit', function (event) {
+    event.preventDefault();
+    const hours = parseInt(document.getElementById('inputhour').value, 10);
+    const minutes = parseInt(document.getElementById('inputminute').value, 10);
+    const seconds = parseInt(document.getElementById('inputsecond').value, 10);
+
+    if (!isNaN(hours) && !isNaN(minutes) && !isNaN(seconds)) {
+        customTime = new Date();
+        customTime.setHours(hours);
+        customTime.setMinutes(minutes);
+        customTime.setSeconds(seconds);
+        customTime = customTime.getTime();
+        lastUpdateTime = Date.now(); // 更新 lastUpdateTime
+    }
+});
