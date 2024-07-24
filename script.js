@@ -61,7 +61,7 @@ function startDrag(e) {
     baseAngle = Math.atan2(e.clientY - centerY, e.clientX - centerX) * (180 / Math.PI); // 计算基准角度
     const baseTime = customTime ? new Date(customTime) : new Date();
     draggedElement.setAttribute('data-base-time', baseTime.getTime());
-    console.log(draggedElement);
+    //console.log(draggedElement);
 }
 
 function stopDrag() {
@@ -78,11 +78,12 @@ function drag(e) {
         cancelAnimationFrame(AF);
     }
     AF = requestAnimationFrame(() => {
+        console.log(draggedElement);
         const rect = draggedElement.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
         const currentAngle = Math.atan2(e.clientY - centerY, e.clientX - centerX) * (180 / Math.PI);
-        //遇到问题：为什么拖拽分针到第三象限的时候时针会疯狂转动，而且分针会剧烈抖动
+        //遇到问题：为什么拖拽分针到第三象限的时候时针会疯狂转动，而且分针会剧烈抖动；每个针在第一次拖动的时候不随鼠标位置转移
         //原因：
 
         let angle = currentAngle - baseAngle; // 计算拖拽的角度
@@ -143,6 +144,13 @@ function resetStopwatch() {
 }
 
 function updateStopwatch() {
+    if (!stopwatchInterval) {
+        const hoursString = String(hours).padStart(2, '0');
+        const minutesString = String(minutes).padStart(2, '0');
+        const secondsString = String(Math.floor(secondsPlusMilliseconds)).padStart(2, '0');
+        document.getElementById('digital-clock').textContent = `${hoursString}:${minutesString}:${secondsString}`;
+    }
+    
     stopwatchElapsedTime = Date.now() - stopwatchStartTime;
     const totalSeconds = Math.floor(stopwatchElapsedTime / 1000);
     const hours = Math.floor(totalSeconds / 3600);
@@ -177,3 +185,56 @@ document.getElementById('input').addEventListener('submit', function (event) {
         lastUpdateTime = Date.now(); // 更新 lastUpdateTime
     }
 });
+
+
+let alarms = [];
+
+function addAlarm() {
+  const hour = parseInt(document.getElementById('inputhour').value, 10);
+  const minute = parseInt(document.getElementById('inputminute').value, 10);
+  const second = parseInt(document.getElementById('inputsecond').value, 10) || 0;
+
+  if (!isNaN(hour) && !isNaN(minute) && !isNaN(second)) {
+    const alarmTime = new Date();
+    alarmTime.setHours(hour, minute, second, 0);
+
+    const alarm = {
+      time: alarmTime,
+      enabled: true
+    };
+    alarms.push(alarm);
+    updateAlarmList();
+  } else {
+    alert('请输入有效的时间');
+  }
+}
+
+function updateAlarmList() {
+  const list = document.getElementById('alarm-list');
+  list.innerHTML = '';
+  alarms.forEach((alarm, index) => {
+    const timeString = `${alarm.time.getHours().toString().padStart(2, '0')}:${alarm.time.getMinutes().toString().padStart(2, '0')}:${alarm.time.getSeconds().toString().padStart(2, '0')}`;
+    list.innerHTML += `<li>${timeString} <button onclick="toggleAlarm(${index})">${alarm.enabled ? '关闭' : '开启'}</button></li>`;
+  });
+}
+
+function toggleAlarm(index) {
+  alarms[index].enabled = !alarms[index].enabled;
+  updateAlarmList();
+}
+
+function checkAlarms() {
+  const now = customTime ? new Date(customTime) : new Date();
+  alarms.forEach(alarm => {
+    if (alarm.enabled && now.getHours() === alarm.time.getHours() && now.getMinutes() === alarm.time.getMinutes() && now.getSeconds() === alarm.time.getSeconds()) {
+      alert('闹钟时间到！');
+    }
+  });
+}
+
+document.getElementById('set_alarm').addEventListener('click', function(event) {
+  event.preventDefault();
+  addAlarm();
+});
+
+setInterval(checkAlarms, 500); 

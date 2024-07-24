@@ -44,7 +44,7 @@ body {
 
 .hand {
     transform-origin: 50% 50%;
-    transition: transform 0.5s cubic-bezier(0.4, 2.3, 0.3, 1);
+    transition: none;
 }
 
 #hour-hand-group {
@@ -139,3 +139,22 @@ body {
 #input>input{
     width: 50px;
 }
+
+#input>#set_alarm {
+    width: 70px;  
+    font-size: 12px; 
+    cursor: pointer; 
+}
+
+#alarm-list {
+    list-style: none;
+    padding: 0;
+    color: #fff; 
+  }
+  #alarm-list li {
+    padding: 5px;
+    margin-top: 5px;
+    background-color: #444; 
+    color: white;
+  }
+  
