@@ -113,11 +113,11 @@
     <div id="digital-clock" class="digital-clock">00:00:00</div>
 
     <form id="input">
-        <input type="text" id="inputhour">
+        <input type="number" id="inputhour">
         <span>时</span>
-        <input type="text" id="inputminute">
+        <input type="number" id="inputminute">
         <span>分</span>
-        <input type="text" id="inputsecond">
+        <input type="number" id="inputsecond">
         <span>秒</span>
         <input type="submit" id="submit" value="设置">
         <input type="submit" id="set_alarm" value="设置闹钟">
@@ -133,6 +133,8 @@
             <button id="reset-stopwatch">重置</button>
         </div>
     </div>
+
+    <audio src="music.wav" id="alarm-sound" preload="auto"></audio>
 
 
     <script src="script.js"></script>
