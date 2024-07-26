@@ -6,7 +6,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
     height: 100vh;
     margin: 0;
     background-color: #333333;
@@ -44,7 +43,7 @@ body {
 
 .hand {
     transform-origin: 50% 50%;
-    transition: none;
+    transition: transform 0.5s cubic-bezier(0.4, 2.3, 0.3, 1);
 }
 
 #hour-hand-group {
@@ -65,7 +64,9 @@ body {
     stroke-width: 4;
 }
 
-.minute-hand-triangle {}
+.minute-hand-triangle{
+
+}
 
 #second-hand-group {
     transform-origin: 50% 50%;
@@ -77,18 +78,14 @@ body {
 }
 
 #second-hand-circle {
-    fill: white;
-    /* Inner fill of the circle (hollowed out) */
-    stroke: #aa0101;
-    /* Border color of the circle */
+    fill: white;  /* Inner fill of the circle (hollowed out) */
+    stroke: #aa0101;  /* Border color of the circle */
     stroke-width: 2.5;
 }
 
 #second-hand-tip {
-    fill: white;
-    /* Inner fill of the circle (hollowed out) */
-    stroke: #aa0101;
-    /* Border color of the circle */
+    fill: white;  /* Inner fill of the circle (hollowed out) */
+    stroke: #aa0101;  /* Border color of the circle */
     stroke-width: 1;
 }
 
@@ -96,67 +93,11 @@ body {
     fill: black;
 }
 
-.digital-clock {
+.digital-clock{
     margin-top: 20px;
-    color: #66cd00;
-    font-family: Arial;
-    font-size: 25px;
+    color:#66cd00;
+    font-family:Arial;
+    font-size:25px;
     text-align: center;
 }
 
-
-/*秒表*/
-.stopwatch {
-    margin-top: 20px;
-    text-align: center;
-    color: white;
-}
-
-.stopwatch-display {
-    font-size: 30px;
-    margin-bottom: 10px;
-}
-
-.stopwatch-buttons button {
-    margin: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-}
-
-
-/*通过输入来调整时间*/
-#input {
-    display: flex;
-    margin: 50px 0 50px 0;
-}
-
-#input>* {
-    margin: 0 10px;
-}
-
-#input>span {
-    color: white;
-}
-
-#input>input {
-    width: 50px;
-}
-
-#input>#set_alarm {
-    width: 70px;
-    font-size: 12px;
-    cursor: pointer;
-}
-
-#alarm-list {
-    list-style: none;
-    padding: 0;
-    color: #fff;
-}
-
-#alarm-list li {
-    padding: 5px;
-    margin-top: 5px;
-    background-color: #444;
-    color: white;
-}
