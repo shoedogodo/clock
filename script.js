@@ -170,7 +170,7 @@ document.getElementById('stop-stopwatch').addEventListener('click', stopStopwatc
 document.getElementById('reset-stopwatch').addEventListener('click', resetStopwatch);
 
 // 参数输入设置时间
-document.getElementById('input').addEventListener('submit', function (event) {
+document.getElementById('submit').addEventListener('click', function (event) {
   event.preventDefault();
   const hours = parseInt(document.getElementById('inputhour').value, 10);
   const minutes = parseInt(document.getElementById('inputminute').value, 10);
@@ -183,10 +183,12 @@ document.getElementById('input').addEventListener('submit', function (event) {
     customTime.setSeconds(seconds);
     customTime = customTime.getTime();
     lastUpdateTime = Date.now(); // 更新 lastUpdateTime
+  } else {
+    alert('请输入有效的时间');
   }
 });
 
-
+// 闹钟
 let alarms = [];
 
 function addAlarm() {
@@ -216,6 +218,7 @@ function updateAlarmList() {
     const timeString = `${alarm.time.getHours().toString().padStart(2, '0')}:${alarm.time.getMinutes().toString().padStart(2, '0')}:${alarm.time.getSeconds().toString().padStart(2, '0')}`;
     list.innerHTML += `<li>${timeString} <button onclick="toggleAlarm(${index})">${alarm.enabled ? '关闭' : '开启'}</button></li>`;
   });
+  document.getElementById('alarm-sound').pause();
 }
 
 function toggleAlarm(index) {
@@ -238,4 +241,12 @@ document.getElementById('set_alarm').addEventListener('click', function (event) 
   addAlarm();
 });
 
-setInterval(checkAlarms, 500); 
+setInterval(checkAlarms, 500);
+
+document.getElementById('stop_alarm').addEventListener('click', (event) => {
+  event.preventDefault();
+  while (alarms.length) {
+    alarms.pop();
+  }
+  updateAlarmList();
+})
