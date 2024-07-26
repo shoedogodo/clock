@@ -36,10 +36,13 @@ function updateClock() {
 
     // 设置秒针的旋转角度
     document.getElementById('second-hand-group').style.transform = `rotate(${secondDegrees}deg)`;
-    // 设置分针的旋转角度
-    document.getElementById('minute-hand-group').style.transform = `rotate(${minuteDegrees}deg)`;
-    // 设置时针的旋转角度
-    document.getElementById('hour-hand-group').style.transform = `rotate(${hourDegrees}deg)`;
+
+    if (!isDragging){
+      // 设置分针的旋转角度
+      document.getElementById('minute-hand-group').style.transform = `rotate(${minuteDegrees}deg)`;
+      // 设置时针的旋转角度
+      document.getElementById('hour-hand-group').style.transform = `rotate(${hourDegrees}deg)`;
+    }
 
     // 将小时、分钟和秒数转换成字符串，并且确保是两位数格式（例如：09:05:08）
     const hoursString = String(hours).padStart(2, '0');
@@ -129,6 +132,9 @@ let stopwatchStartTime;
 let stopwatchElapsedTime = 0;
 
 function startStopwatch() {
+  if (stopwatchInterval){
+    clearInterval(stopwatchInterval);
+  }
     stopwatchStartTime = Date.now() - stopwatchElapsedTime;
     stopwatchInterval = setInterval(updateStopwatch, 10); // 每 10 毫秒更新一次
 }
