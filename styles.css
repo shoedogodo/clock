@@ -1,7 +1,5 @@
-* {
-    margin: 0px;
-    padding: 0px;
-    border: 0px;
+:root {
+    --clock-size: 300px;
 }
 
 body {
@@ -10,17 +8,22 @@ body {
     align-items: center;
     flex-direction: column;
     height: 100vh;
+    margin: 0;
     background-color: #333333;
-    position: relative;
 }
 
-h1 {
-    color: white;
+.clock-container {
+    position: relative;
+
+    width: var(--clock-size);
+    height: var(--clock-size);
+    margin: 50px auto;
+    display: block;
 }
 
 .clock {
-    width: 300px;
-    height: 300px;
+    width: 100%;
+    height: 100%;
 }
 
 .clock-face {
@@ -39,10 +42,10 @@ h1 {
     stroke-width: 2;
 }
 
-/* .hand {
+.hand {
     transform-origin: 50% 50%;
     transition: none;
-} */
+}
 
 #hour-hand-group {
     transform-origin: 50% 50%;
@@ -62,6 +65,8 @@ h1 {
     stroke-width: 4;
 }
 
+.minute-hand-triangle {}
+
 #second-hand-group {
     transform-origin: 50% 50%;
 }
@@ -80,11 +85,15 @@ h1 {
 }
 
 #second-hand-tip {
-    /* fill: white; */
+    fill: white;
     /* Inner fill of the circle (hollowed out) */
-    /* stroke: #aa0101; */
+    stroke: #aa0101;
     /* Border color of the circle */
     stroke-width: 1;
+}
+
+.center-dot {
+    fill: black;
 }
 
 .digital-clock {
@@ -94,6 +103,7 @@ h1 {
     font-size: 25px;
     text-align: center;
 }
+
 
 /*秒表*/
 .stopwatch {
