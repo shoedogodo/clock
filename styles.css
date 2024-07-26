@@ -133,7 +133,8 @@ h1 {
 }
 
 #input>#set_alarm,
-#input>#stop_alarm {
+#input>#stop_alarm,
+#input>#stop_play {
     width: 70px;
     font-size: 12px;
     cursor: pointer;

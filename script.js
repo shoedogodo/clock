@@ -238,6 +238,7 @@ function checkAlarms() {
     if (alarm.enabled && now.getHours() === alarm.time.getHours() && now.getMinutes() === alarm.time.getMinutes() && now.getSeconds() === alarm.time.getSeconds()) {
       //alert('闹钟时间到！');
       document.getElementById('alarm-sound').play();
+      document.getElementById('stop_play').style.display = 'inline-block';
     }
   });
 }
@@ -246,6 +247,11 @@ document.getElementById('set_alarm').addEventListener('click', function (event) 
   event.preventDefault();
   addAlarm();
 });
+
+document.getElementById('stop_play').addEventListener('click', function (event) {
+  document.getElementById('alarm-sound').pause();
+  document.getElementById('stop_play').style.display = 'none';
+})
 
 setInterval(checkAlarms, 500);
 
