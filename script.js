@@ -2,6 +2,7 @@
 let isDragging = false;
 let DraggingMinuteHand = false;
 let DraggingHourHand = false;
+let DraggingSecondHand = false;
 let draggedElement = null;
 let customTime = null; //存储拖拽时的时间
 let lastUpdateTime = Date.now();//存储最后一次更新的时间
@@ -24,7 +25,14 @@ function updateClock() {
         now = new Date();
         lastUpdateTime = now.getTime();
     }
-    const secondsPlusMilliseconds = now.getSeconds() + now.getMilliseconds() / 1000;
+    var secondsPlusMilliseconds
+    if (!DraggingSecondHand){
+       secondsPlusMilliseconds = now.getSeconds() + now.getMilliseconds() / 1000;
+    }
+    else{
+      secondsPlusMilliseconds = now.getSeconds();
+    }
+
     const minutes = now.getMinutes();
     const hours = now.getHours();
     if (!isDragging){
@@ -36,19 +44,21 @@ function updateClock() {
       }
     }
 
-
   const secondDegrees = ((secondsPlusMilliseconds / 60) * 360);
   const minuteDegrees = ((minutes + secondsPlusMilliseconds / 60) / 60) * 360;
   const hourDegrees = ((hours + minutes / 60) / 12) * 360;
 
   // 设置秒针的旋转角度
-  document.getElementById('second-hand-group').style.transform = `rotate(${secondDegrees}deg)`;
+  
 
-    if (!isDragging){
+    if (!isDragging || DraggingSecondHand){
       document.getElementById('minute-hand-group').style.transform = `rotate(${minuteDegrees}deg)`;
     }
     if (!DraggingHourHand){
       document.getElementById('hour-hand-group').style.transform = `rotate(${hourDegrees}deg)`;
+    }
+    if (!DraggingSecondHand){
+      document.getElementById('second-hand-group').style.transform = `rotate(${secondDegrees}deg)`;
     }
 
   // 将小时、分钟和秒数转换成字符串，并且确保是两位数格式
@@ -108,6 +118,7 @@ function stopDrag() {
   isDragging = false;
   DraggingMinuteHand = false;
   DraggingHourHand = false;
+  DraggingSecondHand = false;
   draggedElement = null;
   baseAngle = null; // 重置基准角度
   //requestAnimationFrame(updateClock); // 重新开始自动更新
@@ -152,7 +163,7 @@ function drag(e) {
         draggedElement.style.transform = `rotate(${angle+baseAngle}deg)`;
         //`rotate(${angle+baseAngle}deg)`要不要加baseAngle
         // 根据拖拽的角度计算时间
-        let hours, minutes;
+        let hours, minutes, seconds;
         if (draggedElement.id === 'hour-hand-group') {
           DraggingHourHand = true;
           let newTime = new Date(customTime || new Date());
@@ -200,6 +211,18 @@ function drag(e) {
             }
             newTime.setMinutes(minutes);
             customTime = newTime.getTime();
+        }
+        else if (draggedElement.id === 'second-hand-group'){
+          DraggingSecondHand = true;
+          seconds = ((angle+baseAngle) / 6) % 60;
+          let newTime = new Date(customTime || new Date());
+          if (newTime.getSeconds() > 50 && seconds < 10) {
+            newTime.setMinutes(newTime.getMinutes() + 1);
+          } else if (newTime.getSeconds() < 10 && seconds > 50) {
+            newTime.setMinutes(newTime.getMinutes() - 1);
+          }
+          newTime.setSeconds(seconds);
+          customTime = newTime.getTime();
         }
     });
 }
