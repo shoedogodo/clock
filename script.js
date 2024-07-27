@@ -37,12 +37,12 @@ function updateClock() {
     }
 
 
-    const secondDegrees = ((secondsPlusMilliseconds / 60) * 360);
-    const minuteDegrees = ((minutes + secondsPlusMilliseconds / 60) / 60) * 360;
-    const hourDegrees = ((hours + minutes / 60) / 12) * 360;
+  const secondDegrees = ((secondsPlusMilliseconds / 60) * 360);
+  const minuteDegrees = ((minutes + secondsPlusMilliseconds / 60) / 60) * 360;
+  const hourDegrees = ((hours + minutes / 60) / 12) * 360;
 
-    // 设置秒针的旋转角度
-    document.getElementById('second-hand-group').style.transform = `rotate(${secondDegrees}deg)`;
+  // 设置秒针的旋转角度
+  document.getElementById('second-hand-group').style.transform = `rotate(${secondDegrees}deg)`;
 
     if (!isDragging){
       document.getElementById('minute-hand-group').style.transform = `rotate(${minuteDegrees}deg)`;
@@ -51,12 +51,12 @@ function updateClock() {
       document.getElementById('hour-hand-group').style.transform = `rotate(${hourDegrees}deg)`;
     }
 
-    // 将小时、分钟和秒数转换成字符串，并且确保是两位数格式
-    const hoursString = String(hours).padStart(2, '0');
-    const minutesString = String(minutes).padStart(2, '0');
-    const secondsString = String(Math.floor(secondsPlusMilliseconds)).padStart(2, '0');
-    document.getElementById('digital-clock').textContent = `${hoursString}:${minutesString}:${secondsString}`;
-    requestAnimationFrame(updateClock);
+  // 将小时、分钟和秒数转换成字符串，并且确保是两位数格式
+  const hoursString = String(hours).padStart(2, '0');
+  const minutesString = String(minutes).padStart(2, '0');
+  const secondsString = String(Math.floor(secondsPlusMilliseconds)).padStart(2, '0');
+  document.getElementById('digital-clock').textContent = `${hoursString}:${minutesString}:${secondsString}`;
+  requestAnimationFrame(updateClock);
 }
 
 // function startDrag(e) {
@@ -96,25 +96,25 @@ function startDrag(e) {
   const centerY = height / 2;
   console.log("表盘中心：", centerX, centerY);
   baseAngle = 90 - Math.atan2(centerY - svgPoint.y, svgPoint.x - centerX) * (180 / Math.PI); // 使用转换后的坐标计算基准角度
-  console.log("鼠标x值：", svgPoint.x,"鼠标y值：", svgPoint.y);
-  console.log(svgPoint.x - centerX,centerY-svgPoint.y);
-  console.log("起始角度（相较12点方向）",baseAngle);
+  console.log("鼠标x值：", svgPoint.x, "鼠标y值：", svgPoint.y);
+  console.log(svgPoint.x - centerX, centerY - svgPoint.y);
+  console.log("起始角度（相较12点方向）", baseAngle);
 
   const baseTime = customTime ? new Date(customTime) : new Date();
   draggedElement.setAttribute('data-base-time', baseTime.getTime());
 }
 
 function stopDrag() {
-    isDragging = false;
-    DraggingMinuteHand = false;
-    DraggingHourHand = false;
-    draggedElement = null;
-    baseAngle = null; // 重置基准角度
-    //requestAnimationFrame(updateClock); // 重新开始自动更新
+  isDragging = false;
+  DraggingMinuteHand = false;
+  DraggingHourHand = false;
+  draggedElement = null;
+  baseAngle = null; // 重置基准角度
+  //requestAnimationFrame(updateClock); // 重新开始自动更新
 }
 
 function drag(e) {
-    if (!isDragging || !draggedElement) return;
+  if (!isDragging || !draggedElement) return;
 
     if (AF) {
         cancelAnimationFrame(AF);
@@ -221,43 +221,43 @@ let stopwatchStartTime;
 let stopwatchElapsedTime = 0;
 
 function startStopwatch() {
-  if (stopwatchInterval){
+  if (stopwatchInterval) {
     clearInterval(stopwatchInterval);
   }
-    stopwatchStartTime = Date.now() - stopwatchElapsedTime;
-    stopwatchInterval = setInterval(updateStopwatch, 10); // 每 10 毫秒更新一次
+  stopwatchStartTime = Date.now() - stopwatchElapsedTime;
+  stopwatchInterval = setInterval(updateStopwatch, 10); // 每 10 毫秒更新一次
 }
 
 function stopStopwatch() {
-    clearInterval(stopwatchInterval);
+  clearInterval(stopwatchInterval);
 }
 
 function resetStopwatch() {
-    clearInterval(stopwatchInterval);
-    stopwatchElapsedTime = 0;
-    document.getElementById('stopwatch-display').textContent = '00:00:00:00';
+  clearInterval(stopwatchInterval);
+  stopwatchElapsedTime = 0;
+  document.getElementById('stopwatch-display').textContent = '00:00:00:00';
 }
 
 function updateStopwatch() {
-    if (!stopwatchInterval) {
-        const hoursString = String(hours).padStart(2, '0');
-        const minutesString = String(minutes).padStart(2, '0');
-        const secondsString = String(Math.floor(secondsPlusMilliseconds)).padStart(2, '0');
-        document.getElementById('digital-clock').textContent = `${hoursString}:${minutesString}:${secondsString}`;
-    }
-    
-    stopwatchElapsedTime = Date.now() - stopwatchStartTime;
-    const totalSeconds = Math.floor(stopwatchElapsedTime / 1000);
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-    const centiseconds = Math.floor((stopwatchElapsedTime % 1000) / 10); // 百分之一秒
-
+  if (!stopwatchInterval) {
     const hoursString = String(hours).padStart(2, '0');
     const minutesString = String(minutes).padStart(2, '0');
-    const secondsString = String(seconds).padStart(2, '0');
-    const centisecondsString = String(centiseconds).padStart(2, '0');
-    document.getElementById('stopwatch-display').textContent = `${hoursString}:${minutesString}:${secondsString}:${centisecondsString}`;
+    const secondsString = String(Math.floor(secondsPlusMilliseconds)).padStart(2, '0');
+    document.getElementById('digital-clock').textContent = `${hoursString}:${minutesString}:${secondsString}`;
+  }
+
+  stopwatchElapsedTime = Date.now() - stopwatchStartTime;
+  const totalSeconds = Math.floor(stopwatchElapsedTime / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  const centiseconds = Math.floor((stopwatchElapsedTime % 1000) / 10); // 百分之一秒
+
+  const hoursString = String(hours).padStart(2, '0');
+  const minutesString = String(minutes).padStart(2, '0');
+  const secondsString = String(seconds).padStart(2, '0');
+  const centisecondsString = String(centiseconds).padStart(2, '0');
+  document.getElementById('stopwatch-display').textContent = `${hoursString}:${minutesString}:${secondsString}:${centisecondsString}`;
 }
 
 document.getElementById('start-stopwatch').addEventListener('click', startStopwatch);
@@ -266,10 +266,10 @@ document.getElementById('reset-stopwatch').addEventListener('click', resetStopwa
 
 // 参数输入设置时间
 document.getElementById('submit').addEventListener('click', function (event) {
-    event.preventDefault();
-    const hours = parseInt(document.getElementById('inputhour').value, 10);
-    const minutes = parseInt(document.getElementById('inputminute').value, 10);
-    const seconds = parseInt(document.getElementById('inputsecond').value, 10);
+  event.preventDefault();
+  const hours = parseInt(document.getElementById('inputhour').value, 10);
+  const minutes = parseInt(document.getElementById('inputminute').value, 10);
+  const seconds = parseInt(document.getElementById('inputsecond').value, 10);
 
     if (!isNaN(hours) && !isNaN(minutes) && !isNaN(seconds) && hours >= 0 && minutes >= 0 && seconds >= 0) {
         customTime = new Date();
@@ -280,7 +280,7 @@ document.getElementById('submit').addEventListener('click', function (event) {
         lastUpdateTime = Date.now(); // 更新 lastUpdateTime
   } else {
     alert('请输入有效的时间');
-    }
+  }
 });
 
 // 闹钟
@@ -338,11 +338,12 @@ document.getElementById('set_alarm').addEventListener('click', function (event) 
 });
 
 document.getElementById('stop_play').addEventListener('click', function (event) {
+  event.preventDefault();
   document.getElementById('alarm-sound').pause();
   document.getElementById('stop_play').style.display = 'none';
 })
 
-setInterval(checkAlarms, 500); 
+setInterval(checkAlarms, 500);
 
 document.getElementById('stop_alarm').addEventListener('click', (event) => {
   event.preventDefault();

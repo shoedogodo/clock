@@ -40,10 +40,10 @@ h1 {
     stroke-width: 2;
 }
 
-.hand {
+/* .hand {
     transform-origin: 50% 50%;
     transition: none;
-}
+} */
 
 #hour-hand-group {
     transform-origin: 50% 50%;
