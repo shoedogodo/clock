@@ -295,7 +295,7 @@ document.getElementById('submit').addEventListener('click', function (event) {
   const seconds = parseInt(document.getElementById('inputsecond').value, 10);
 
 
-  if (!isNaN(hours) && !isNaN(minutes) && !isNaN(seconds) && hours >= 0 && minutes >= 0 && seconds >= 0) {
+  if (!isNaN(hours) && !isNaN(minutes) && !isNaN(seconds)) {
     customTime = new Date();
     customTime.setHours(hours);
     customTime.setMinutes(minutes);
@@ -313,10 +313,9 @@ let alarms = [];
 function addAlarm() {
   const hour = parseInt(document.getElementById('inputhour').value, 10);
   const minute = parseInt(document.getElementById('inputminute').value, 10);
-  const second = parseInt(document.getElementById('inputsecond').value, 10) || 0;
+  const second = parseInt(document.getElementById('inputsecond').value, 10);
 
-  if (!isNaN(hour) && !isNaN(minute) && !isNaN(second) && hour >= 0 && minute >= 0 && second >= 0
-  && hour <= 23 && minute <= 59 && second <= 59) {
+  if (!isNaN(hour) && !isNaN(minute) && !isNaN(second)) {
     const alarmTime = new Date();
     alarmTime.setHours(hour, minute, second, 0);
 
