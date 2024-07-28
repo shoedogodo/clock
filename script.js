@@ -456,9 +456,6 @@ document.getElementById('sync').addEventListener('click', function (event) {
 })
 
 
-
-
-
 // 倒计时功能
 let countdownInterval;
 let countdownTime;

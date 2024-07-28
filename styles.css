@@ -14,6 +14,7 @@ body {
     position: relative;
     background-image: url(background.gif);
     background-size: cover;
+    min-height: 100vh;
 }
 
 h1 {
@@ -156,6 +157,14 @@ h3 {
     list-style: none;
     padding: 0;
     color: #fff;
+    flex-direction:column;
+    gap:10px;
+    margin-top:-80px;
+    margin-left:-650px;
+
+    flex:0.8;
+    overflow-y: auto;
+
 }
 
 #alarm-list li {
@@ -191,12 +200,26 @@ h3 {
     list-style: none;
     padding: 0;
     color: #fff;
+    flex-direction: column;
+    gap:10px;
+    margin-top:-50px;
+    margin-left:-180px;
+
+    flex:0.8;
+    overflow-y: auto;
 }
 
 #lap-list li {
     padding: 5px;
-    margin-top: 5px;
+    margin-top: 30px;
     background-color: #444;
     color: white;
     margin: 0px 10px;
+}
+
+/*闹钟列表*/
+.alarm {
+    margin-top: 20px;
+    text-align: center;
+    color: white;
 }

@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    
     <h1>可交互时钟</h1>
 
     <svg class="clock" viewBox="0 0 100 100">
@@ -126,10 +127,14 @@
         <input type="submit" id="stop_play" value="停止响铃" style="display: none;">
     </form>
 
-    <ul id="alarm-list" style="display: flex;"></ul>
 
     <div style="display: flex;">
-        <div class="stopwatch" style="margin-right: 50px;">
+        <div class="alarm" style="margin-right:50px;">
+            <h3>闹钟列表</h3>
+        </div>
+
+
+        <div class="stopwatch" style="margin-right: 33px;">
             <h3>秒表</h3>
             <div id="stopwatch-display" class="stopwatch-display">00:00:00:00</div>
             <div class="stopwatch-buttons">
@@ -151,7 +156,12 @@
         </div>
     </div>
 
+    <ul id="alarm-list" style="display: flex;"></ul>
+
     <ul id="lap-list" style="display: flex;"></ul>
+
+
+    <div class="footer"></div>
 
     <audio src="music.wav" id="alarm-sound" preload="auto"></audio>
 
