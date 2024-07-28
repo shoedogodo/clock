@@ -200,7 +200,7 @@ function drag(e) {
     }
     else if (draggedElement.id === 'minute-hand-group') {
       DraggingMinuteHand = true;
-      minutes = ((angle + baseAngle) / 6) % 60;
+      minutes = ((angle + baseAngle + 360) / 6) % 60;
       let newTime = new Date(customTime || new Date());
       //发现问题：分钟经过12点时小时数不增加：原因：在sethour时没有考虑到小时的变化
       //解决方案：在sethour时判断分钟的大小，如果分钟大于50且当前分钟小于10，则小时数加1；如果分钟小于10且当前分钟大于50，则小时数减1
@@ -214,7 +214,7 @@ function drag(e) {
     }
     else if (draggedElement.id === 'second-hand-group') {
       DraggingSecondHand = true;
-      seconds = ((angle + baseAngle) / 6) % 60;
+      seconds = ((angle + baseAngle + 360) / 6) % 60;
       let newTime = new Date(customTime || new Date());
       if (newTime.getSeconds() > 50 && seconds < 10) {
         newTime.setMinutes(newTime.getMinutes() + 1);
