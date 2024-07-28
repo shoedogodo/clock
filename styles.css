@@ -12,11 +12,17 @@ body {
     height: 100vh;
     background-color: #333333;
     position: relative;
+    background-image: url(background.gif);
+    background-size: cover;
 }
 
 h1 {
     color: white;
     margin-bottom: 25px;
+}
+
+h3 {
+    color: white;
 }
 
 .clock {
@@ -117,11 +123,11 @@ h1 {
 /*通过输入来调整时间*/
 #input {
     display: flex;
-    margin: 50px 0 50px 0;
+    margin: 20px 0 20px 0;
 }
 
 #input>* {
-    margin: 0 10px;
+    margin: 0 5px;
 }
 
 #input>label {
@@ -129,7 +135,7 @@ h1 {
 }
 
 #input>input {
-    width: 50px;
+    width: 40px;
 }
 
 #input>#set_alarm,
@@ -157,4 +163,25 @@ h1 {
     margin-top: 5px;
     background-color: #444;
     color: white;
+    margin: 0px 10px;
+}
+
+
+
+/* 倒计时 */
+.countdown {
+    margin-top: 20px;
+    text-align: center;
+    color: white;
+}
+
+.countdown-display {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.countdown-buttons button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
 }
