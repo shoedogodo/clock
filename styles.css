@@ -185,3 +185,18 @@ h3 {
     padding: 10px 20px;
     font-size: 16px;
 }
+
+/* 秒表 */
+#lap-list {
+    list-style: none;
+    padding: 0;
+    color: #fff;
+}
+
+#lap-list li {
+    padding: 5px;
+    margin-top: 5px;
+    background-color: #444;
+    color: white;
+    margin: 0px 10px;
+}

@@ -243,11 +243,15 @@ let stopwatchInterval;
 let stopwatchStartTime;
 let stopwatchElapsedTime = 0;
 
+let stopwatchLapStartTime;
+let stopwatchLapElapsedTime = 0;
+
 function startStopwatch() {
   if (stopwatchInterval) {
     clearInterval(stopwatchInterval);
   }
   stopwatchStartTime = Date.now() - stopwatchElapsedTime;
+  stopwatchLapStartTime = Date.now() - stopwatchLapElapsedTime;
   stopwatchInterval = setInterval(updateStopwatch, 10); // 每 10 毫秒更新一次
 }
 
@@ -255,10 +259,69 @@ function stopStopwatch() {
   clearInterval(stopwatchInterval);
 }
 
+let laps = [];
+
+function updateLapList() {
+  const lap_list = document.getElementById('lap-list');
+  lap_list.innerHTML = '';
+
+  laps.forEach((lap, index) => {
+      index++;
+
+      const centiseconds = Math.floor(lap.time.getMilliseconds() / 10); // Get centiseconds
+      const centisecondsString = centiseconds.toString().padStart(2, '0'); // Convert to string and pad with '0'
+      const timeString = `${lap.time.getHours().toString().padStart(2, '0')}:${lap.time.getMinutes().toString().padStart(2, '0')}:${lap.time.getSeconds().toString().padStart(2, '0')}:${centisecondsString}`;
+
+      const lapDisplayString = `Lap ${index}: ${timeString}`;
+
+      const li = document.createElement('li');
+      li.innerHTML = `${lapDisplayString}`
+
+      lap_list.appendChild(li);
+  });
+}
+
+
+
+
+function lapStopwatch() {
+  if (stopwatchElapsedTime==0){
+    return;
+  }
+
+
+  const totalSeconds = Math.floor(stopwatchLapElapsedTime / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  const centiseconds = Math.floor((stopwatchLapElapsedTime % 1000) / 10); // 百分之一秒
+
+  const lapTime = new Date();
+  lapTime.setHours(hours, minutes, seconds, centiseconds*10);
+
+  const lapNum = laps.length;
+
+  const lap = {
+    time: lapTime,
+    index: lapNum
+  };
+  laps.push(lap);
+  updateLapList();
+
+  stopwatchLapElapsedTime = 0;
+  stopwatchLapStartTime = Date.now() - stopwatchLapElapsedTime;
+}
+
 function resetStopwatch() {
   clearInterval(stopwatchInterval);
   stopwatchElapsedTime = 0;
   document.getElementById('stopwatch-display').textContent = '00:00:00:00';
+
+  while (laps.length) {
+    laps.pop();
+  }
+  updateLapList();
+
 }
 
 function updateStopwatch() {
@@ -270,6 +333,7 @@ function updateStopwatch() {
   }
 
   stopwatchElapsedTime = Date.now() - stopwatchStartTime;
+  stopwatchLapElapsedTime = Date.now() - stopwatchLapStartTime;
   const totalSeconds = Math.floor(stopwatchElapsedTime / 1000);
   const hours = Math.floor(totalSeconds / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
@@ -285,6 +349,7 @@ function updateStopwatch() {
 
 document.getElementById('start-stopwatch').addEventListener('click', startStopwatch);
 document.getElementById('stop-stopwatch').addEventListener('click', stopStopwatch);
+document.getElementById('lap-stopwatch').addEventListener('click', lapStopwatch);
 document.getElementById('reset-stopwatch').addEventListener('click', resetStopwatch);
 
 // 参数输入设置时间
