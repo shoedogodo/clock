@@ -11,11 +11,15 @@
 <body>
 
     <h1>可交互时钟</h1>
+
+
     <div id="main">
+
         <div id="main1">
             <h3>闹钟列表</h3>
             <ul id="alarm-list"></ul>
         </div>
+
         <div id="main2">
             <svg class="clock" viewBox="0 0 100 100">
                 <!-- Clock face -->
@@ -118,27 +122,30 @@
             </svg>
             <div id="digital-clock" class="digital-clock">00:00:00</div>
         </div>
+
         <div id="main3">
             <div class="stopwatch">
                 <h3>秒表</h3>
-                <div id="stopwatch-display" class="stopwatch-display">00:00:00:00</div>
+                <div id="stopwatch-display" class="stopwatch-display">00:00:00.00</div>
                 <div class="stopwatch-buttons">
-                    <button id="start-stopwatch">开始</button>
-                    <button id="stop-stopwatch">暂停</button>
-                    <button id="lap-stopwatch">记录</button>
-                    <button id="reset-stopwatch">重置</button>
+                    <button id="start-stopwatch" class="buttona">开始</button>
+                    <button id="stop-stopwatch" class="buttonb">暂停</button>
+                    <button id="split-stopwatch" class="buttona">记录</button>
+                    <button id="reset-stopwatch" class="buttonb">重置</button>
                 </div>
             </div>
             <div class="countdown">
                 <h3>倒计时</h3>
-                <div id="countdown-display" class="countdown-display">00:00:00:00</div>
+                <div id="countdown-display" class="countdown-display">00:00:00.00</div>
                 <div class="countdown-buttons">
-                    <button id="start-countdown">开始</button>
-                    <button id="stop-countdown">暂停</button>
-                    <button id="reset-countdown">重置</button>
+                    <button id="start-countdown" class="buttona">开始</button>
+                    <button id="stop-countdown" class="buttonb">暂停</button>
+                    <button id="set-countdown" class="buttona">设置</button>
+                    <button id="reset-countdown" class="buttonb">重置</button>
                 </div>
             </div>
         </div>
+
         <div id="main4">
             <h3>秒表记录</h3>
             <ul id="lap-list"></ul>
@@ -162,15 +169,32 @@
             <input type="submit" id="stop_alarm" class="button2 button" value="清空闹钟">
             <input type="submit" id="stop_play" class="button3 button" value="停止响铃" style="display: none;">
         </div>
-
     </form>
 
+
+    <!-- 模态对话框 -->
+    <div id="setCountdownModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>设置倒计时</h2>
+            <label for="input_hour">请输入时间：</label>
+            <input type="number" id="input_hour" min="0" value="0" class="modalnumber">
+            <label for="input_minute">:</label>
+            <input type="number" id="input_minute" min="0" value="0" class="modalnumber">
+            <label for="input_second">:</label>
+            <input type="number" id="input_second" min="0" value="5" class="modalnumber">
+            <label for="inputcentisecond">.</label>
+            <input type="number" id="input_centisecond" min="0" max="99" value="0" class="modalnumber">
+            <button id="save-time">保存</button>
+        </div>
+    </div>
 
 
     <audio src="music.wav" id="alarm-sound" preload="auto"></audio>
 
 
     <script src="script.js"></script>
+
 </body>
 
 </html>

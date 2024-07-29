@@ -26,6 +26,7 @@ h1 {
 h3 {
     color: white;
     text-align: center;
+    height: 30px;
 }
 
 #main {
@@ -151,6 +152,16 @@ h3 {
     cursor: pointer;
 }
 
+.buttona {
+    background-color: green;
+    opacity: 0.5;
+}
+
+.buttonb {
+    background-color: red;
+    opacity: 0.5;
+}
+
 /*以上为秒表的样式部分*/
 
 
@@ -245,11 +256,10 @@ h3 {
     color: #fff;
     flex-direction: column;
     gap: 10px;
-    flex: 0.8;
+    flex: 1;
     overflow-y: auto;
     position: relative;
     width: 200px;
-    height: 380px;
 }
 
 #alarm-list li {
@@ -260,10 +270,10 @@ h3 {
     margin: 0px 10px;
 }
 
-.alarm {
-    margin-top: 20px;
-    text-align: center;
-    color: white;
+#alarm-list li button {
+    padding: 0 5px;
+    cursor: pointer;
+    margin: 0 1px;
 }
 
 
@@ -275,10 +285,9 @@ h3 {
     color: #fff;
     flex-direction: column;
     gap: 10px;
-    flex: 0.8;
+    flex: 1;
     overflow-y: auto;
     width: 200px;
-    height: 380px;
 }
 
 #lap-list li {
@@ -287,4 +296,47 @@ h3 {
     background-color: #444;
     color: white;
     margin: 0px 10px;
+}
+
+
+/*模态对话框*/
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal .modalnumber{
+    width: 60px;
+    height: 30px;
+    font-size: 20px;
 }
