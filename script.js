@@ -440,26 +440,25 @@ document.getElementById('sync').addEventListener('click', function (event) {
 
 
 // 倒计时功能
-let countdownInterval;
-let countdownTime;
-let modal = document.getElementById("setCountdownModal");
+let countdownInterval;//setInterval返回的id
+let countdownTime = 0;//倒计时时长
+let modal = document.getElementById("modal");
 let btnSet = document.getElementById("set-countdown");
-let span = document.getElementsByClassName("close")[0];
 let btnSave = document.getElementById("save-time");
 
 btnSet.onclick = function () {
   modal.style.display = "block";
 }
 
-span.onclick = function () {
+document.getElementById('close').onclick = function () {
   modal.style.display = "none";
 }
 
-window.onclick = function (event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
+// window.onclick = function (event) {
+//   if (event.target == modal) {
+//     modal.style.display = "none";
+//   }
+// }
 
 btnSave.onclick = function () {
   const hours = parseInt(document.getElementById('input_hour').value, 10);
@@ -467,7 +466,7 @@ btnSave.onclick = function () {
   const seconds = parseInt(document.getElementById('input_second').value, 10);
   const centiseconds = parseInt(document.getElementById('input_centisecond').value, 10);
 
-  if (!isNaN(hours) && !isNaN(minutes) && !isNaN(seconds) && !isNaN(centiseconds)) {
+  if (!isNaN(hours) && !isNaN(minutes) && !isNaN(seconds) && !isNaN(centiseconds) && hours >= 0 && minutes >= 0 && seconds >= 0) {
     countdownTime = (hours * 3600 + minutes * 60 + seconds) * 1000 + centiseconds * 10;
     updateDisplay(hours, minutes, seconds, centiseconds);
     modal.style.display = "none";
@@ -496,13 +495,13 @@ function resetCountdown() {
 }
 
 function updateCountdown() {
-  if (countdownTime <= 0) {
+  if (countdownTime <= 10) {
+    countdownTime = 0;
     clearInterval(countdownInterval);
-    document.getElementById('countdown-display').textContent = '00:00:00.00';
-    alert('倒计时结束');
+    updateDisplay(0, 0, 0, 0); // 确保更新显示为 00:00:00.00
+    setTimeout(() => alert('倒计时结束'), 10); // 延迟 10 毫秒，确保显示更新后再弹出提示
     return;
   }
-
   countdownTime -= 10;
   const totalMilliseconds = countdownTime;
   const totalSeconds = Math.floor(totalMilliseconds / 1000);
