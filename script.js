@@ -266,18 +266,18 @@ function updateLapList() {
   lap_list.innerHTML = '';
 
   laps.forEach((lap, index) => {
-      index++;
+    index++;
 
-      const centiseconds = Math.floor(lap.time.getMilliseconds() / 10); // Get centiseconds
-      const centisecondsString = centiseconds.toString().padStart(2, '0'); // Convert to string and pad with '0'
-      const timeString = `${lap.time.getHours().toString().padStart(2, '0')}:${lap.time.getMinutes().toString().padStart(2, '0')}:${lap.time.getSeconds().toString().padStart(2, '0')}:${centisecondsString}`;
+    const centiseconds = Math.floor(lap.time.getMilliseconds() / 10); // Get centiseconds
+    const centisecondsString = centiseconds.toString().padStart(2, '0'); // Convert to string and pad with '0'
+    const timeString = `${lap.time.getHours().toString().padStart(2, '0')}:${lap.time.getMinutes().toString().padStart(2, '0')}:${lap.time.getSeconds().toString().padStart(2, '0')}:${centisecondsString}`;
 
-      const lapDisplayString = `Lap ${index}: ${timeString}`;
+    const lapDisplayString = `Lap ${index}: ${timeString}`;
 
-      const li = document.createElement('li');
-      li.innerHTML = `${lapDisplayString}`
+    const li = document.createElement('li');
+    li.innerHTML = `${lapDisplayString}`
 
-      lap_list.appendChild(li);
+    lap_list.appendChild(li);
   });
 }
 
@@ -285,7 +285,7 @@ function updateLapList() {
 
 
 function lapStopwatch() {
-  if (stopwatchElapsedTime==0){
+  if (stopwatchElapsedTime == 0) {
     return;
   }
 
@@ -297,7 +297,7 @@ function lapStopwatch() {
   const centiseconds = Math.floor((stopwatchLapElapsedTime % 1000) / 10); // 百分之一秒
 
   const lapTime = new Date();
-  lapTime.setHours(hours, minutes, seconds, centiseconds*10);
+  lapTime.setHours(hours, minutes, seconds, centiseconds * 10);
 
   const lapNum = laps.length;
 
@@ -399,10 +399,10 @@ function updateAlarmList() {
   const list = document.getElementById('alarm-list');
   list.innerHTML = '';
   alarms.forEach((alarm, index) => {
-      const timeString = `${alarm.time.getHours().toString().padStart(2, '0')}:${alarm.time.getMinutes().toString().padStart(2, '0')}:${alarm.time.getSeconds().toString().padStart(2, '0')}`;
-      const li = document.createElement('li');
-      li.innerHTML = `${timeString} <button onclick="toggleAlarm(${index})">${alarm.enabled ? '关闭' : '开启'}</button> <button onclick="deleteAlarm(${index})">删除</button>`;
-      list.appendChild(li);
+    const timeString = `${alarm.time.getHours().toString().padStart(2, '0')}:${alarm.time.getMinutes().toString().padStart(2, '0')}:${alarm.time.getSeconds().toString().padStart(2, '0')}`;
+    const li = document.createElement('li');
+    li.innerHTML = `${timeString} <button onclick="toggleAlarm(${index})">${alarm.enabled ? '关闭' : '开启'}</button> <button onclick="deleteAlarm(${index})">删除</button>`;
+    list.appendChild(li);
   });
   document.getElementById('alarm-sound').pause();
 }
@@ -461,47 +461,47 @@ let countdownInterval;
 let countdownTime;
 
 function startCountdown() {
-    const hours = parseInt(document.getElementById('inputhour').value, 10);
-    const minutes = parseInt(document.getElementById('inputminute').value, 10);
-    const seconds = parseInt(document.getElementById('inputsecond').value, 10);
+  const hours = parseInt(document.getElementById('inputhour').value, 10);
+  const minutes = parseInt(document.getElementById('inputminute').value, 10);
+  const seconds = parseInt(document.getElementById('inputsecond').value, 10);
 
-    if (!isNaN(hours) && !isNaN(minutes) && !isNaN(seconds) && hours >= 0 && minutes >= 0 && seconds >= 0) {
-        countdownTime = (hours * 3600 + minutes * 60 + seconds) * 1000;
-        if (countdownInterval) clearInterval(countdownInterval);
-        countdownInterval = setInterval(updateCountdown, 1000);
-    } else {
-        alert('请输入有效的时间');
-    }
+  if (!isNaN(hours) && !isNaN(minutes) && !isNaN(seconds) && hours >= 0 && minutes >= 0 && seconds >= 0) {
+    countdownTime = (hours * 3600 + minutes * 60 + seconds) * 1000;
+    if (countdownInterval) clearInterval(countdownInterval);
+    countdownInterval = setInterval(updateCountdown, 1000);
+  } else {
+    alert('请输入有效的时间');
+  }
 }
 
 function stopCountdown() {
-    clearInterval(countdownInterval);
+  clearInterval(countdownInterval);
 }
 
 function resetCountdown() {
-    clearInterval(countdownInterval);
-    countdownTime = 0;
-    document.getElementById('countdown-display').textContent = '00:00:00';
+  clearInterval(countdownInterval);
+  countdownTime = 0;
+  document.getElementById('countdown-display').textContent = '00:00:00';
 }
 
 function updateCountdown() {
-    if (countdownTime <= 0) {
-        clearInterval(countdownInterval);
-        document.getElementById('countdown-display').textContent = '00:00:00';
-        alert('倒计时结束');
-        return;
-    }
+  if (countdownTime <= 0) {
+    clearInterval(countdownInterval);
+    document.getElementById('countdown-display').textContent = '00:00:00';
+    alert('倒计时结束');
+    return;
+  }
 
-    countdownTime -= 1000;
-    const totalSeconds = Math.floor(countdownTime / 1000);
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
+  countdownTime -= 1000;
+  const totalSeconds = Math.floor(countdownTime / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
 
-    const hoursString = String(hours).padStart(2, '0');
-    const minutesString = String(minutes).padStart(2, '0');
-    const secondsString = String(seconds).padStart(2, '0');
-    document.getElementById('countdown-display').textContent = `${hoursString}:${minutesString}:${secondsString}`;
+  const hoursString = String(hours).padStart(2, '0');
+  const minutesString = String(minutes).padStart(2, '0');
+  const secondsString = String(seconds).padStart(2, '0');
+  document.getElementById('countdown-display').textContent = `${hoursString}:${minutesString}:${secondsString}`;
 }
 
 document.getElementById('start-countdown').addEventListener('click', startCountdown);

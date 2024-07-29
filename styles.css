@@ -1,3 +1,4 @@
+/*以下为总体的样式部分*/
 * {
     margin: 0px;
     padding: 0px;
@@ -19,16 +20,41 @@ body {
 
 h1 {
     color: white;
-    margin-bottom: 25px;
+    margin: 30px 0;
 }
 
 h3 {
     color: white;
+    text-align: center;
 }
 
+#main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    max-height: 400px;
+}
+
+#main4,
+#main1 {
+    width: 200px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/*以上为总体的样式部分*/
+
+
+/*以下为svg的样式部分*/
 .clock {
     width: 300px;
     height: 300px;
+    margin: 0px 50px;
 }
 
 .clock-face {
@@ -46,11 +72,6 @@ h3 {
     stroke: black;
     stroke-width: 2;
 }
-
-/* .hand {
-    transform-origin: 50% 50%;
-    transition: none;
-} */
 
 #hour-hand-group {
     transform-origin: 50% 50%;
@@ -95,6 +116,10 @@ h3 {
     stroke-width: 1;
 }
 
+/*以上为svg的样式部分*/
+
+
+/*以下为数字时钟的样式部分*/
 .digital-clock {
     margin-top: 20px;
     color: #66cd00;
@@ -103,7 +128,10 @@ h3 {
     text-align: center;
 }
 
-/*秒表*/
+/*以上为数字时钟的样式部分*/
+
+
+/*以下为秒表的样式部分*/
 .stopwatch {
     margin-top: 20px;
     text-align: center;
@@ -119,65 +147,14 @@ h3 {
     margin: 5px;
     padding: 10px 20px;
     font-size: 16px;
-}
-
-/*通过输入来调整时间*/
-#input {
-    display: flex;
-    margin: 20px 0 20px 0;
-}
-
-#input>* {
-    margin: 0 5px;
-}
-
-#input>label {
-    color: white;
-}
-
-#input>input {
-    width: 40px;
-}
-
-#input>#set_alarm,
-#input>#stop_alarm,
-#input>#stop_play {
-    width: 70px;
-    font-size: 12px;
+    border-radius: 10%;
     cursor: pointer;
 }
 
-#input>#sync {
-    width: 90px;
-    font-size: 12px;
-    cursor: pointer;
-}
-
-#alarm-list {
-    list-style: none;
-    padding: 0;
-    color: #fff;
-    flex-direction:column;
-    gap:10px;
-    margin-top:-80px;
-    margin-left:-650px;
-
-    flex:0.8;
-    overflow-y: auto;
-
-}
-
-#alarm-list li {
-    padding: 5px;
-    margin-top: 5px;
-    background-color: #444;
-    color: white;
-    margin: 0px 10px;
-}
+/*以上为秒表的样式部分*/
 
 
-
-/* 倒计时 */
+/*以下为倒计时的样式部分*/
 .countdown {
     margin-top: 20px;
     text-align: center;
@@ -193,20 +170,115 @@ h3 {
     margin: 5px;
     padding: 10px 20px;
     font-size: 16px;
+    border-radius: 10%;
+    cursor: pointer;
 }
 
-/* 秒表 */
-#lap-list {
+/*以上为倒计时的样式部分*/
+
+
+/*以下为设置框的样式部分*/
+#input {
+    display: flex;
+    margin: 50px 0 0 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#input1 {
+    margin: 20px 0 10px 0;
+}
+
+#input2 {
+    margin: 10px 0 20px 0;
+}
+
+#input1>*,
+#input2>* {
+    margin: 0 5px;
+}
+
+#input1>label {
+    color: white;
+    font-size: 20px;
+}
+
+#input1>.number {
+    width: 60px;
+    height: 30px;
+    font-size: 20px;
+}
+
+#input2>.button {
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 10%;
+}
+
+#input2>.button1 {
+    background-color: green;
+    opacity: 0.5;
+}
+
+#input2>.button2 {
+    background-color: yellow;
+    opacity: 0.5;
+}
+
+#input2>.button3 {
+    background-color: red;
+    opacity: 0.5;
+    display: none;
+}
+
+/*以上为设置框的样式部分*/
+
+
+/*闹钟列表*/
+#alarm-list {
+    display: flex;
     list-style: none;
     padding: 0;
     color: #fff;
     flex-direction: column;
-    gap:10px;
-    margin-top:-50px;
-    margin-left:-180px;
-
-    flex:0.8;
+    gap: 10px;
+    flex: 0.8;
     overflow-y: auto;
+    position: relative;
+    width: 200px;
+    height: 380px;
+}
+
+#alarm-list li {
+    padding: 5px;
+    margin-top: 5px;
+    background-color: #444;
+    color: white;
+    margin: 0px 10px;
+}
+
+.alarm {
+    margin-top: 20px;
+    text-align: center;
+    color: white;
+}
+
+
+/*秒表记录*/
+#lap-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    color: #fff;
+    flex-direction: column;
+    gap: 10px;
+    flex: 0.8;
+    overflow-y: auto;
+    width: 200px;
+    height: 380px;
 }
 
 #lap-list li {
@@ -215,11 +287,4 @@ h3 {
     background-color: #444;
     color: white;
     margin: 0px 10px;
-}
-
-/*闹钟列表*/
-.alarm {
-    margin-top: 20px;
-    text-align: center;
-    color: white;
 }
