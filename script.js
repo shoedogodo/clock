@@ -104,11 +104,11 @@ function startDrag(e) {
   const height = parseFloat(viewBox[3]);
   const centerX = width / 2;
   const centerY = height / 2;
-  console.log("表盘中心：", centerX, centerY);
+  //*console.log("表盘中心：", centerX, centerY);
   baseAngle = 90 - Math.atan2(centerY - svgPoint.y, svgPoint.x - centerX) * (180 / Math.PI); // 使用转换后的坐标计算基准角度
-  console.log("鼠标x值：", svgPoint.x, "鼠标y值：", svgPoint.y);
-  console.log(svgPoint.x - centerX, centerY - svgPoint.y);
-  console.log("起始角度（相较12点方向）", baseAngle);
+  //*console.log("鼠标x值：", svgPoint.x, "鼠标y值：", svgPoint.y);
+  //*console.log(svgPoint.x - centerX, centerY - svgPoint.y);
+  //*console.log("起始角度（相较12点方向）", baseAngle);
 
   const baseTime = customTime ? new Date(customTime) : new Date();
   draggedElement.setAttribute('data-base-time', baseTime.getTime());
@@ -131,7 +131,7 @@ function drag(e) {
     cancelAnimationFrame(AF);
   }
   AF = requestAnimationFrame(() => {
-    console.log(draggedElement);
+    //*console.log(draggedElement);
     // const rect = draggedElement.getBoundingClientRect();
     // const centerX = rect.left + rect.width / 2;
     // const centerY = rect.top + rect.height / 2;
@@ -148,7 +148,7 @@ function drag(e) {
     const distance = Math.sqrt(Math.pow(svgPoint.x - centerX, 2) + Math.pow(svgPoint.y - centerY, 2));
     const radiusThreshold = Math.min(width, height) / 2 * 0.1;
     if (distance < radiusThreshold) {
-      console.log("Too close to the center, no dragging performed.");
+      //*console.log("Too close to the center, no dragging performed.");
       return; // 鼠标太接近中心，不执行拖拽操作
     }
     //console.log("表盘中心：", centerX, centerY);
@@ -168,7 +168,7 @@ function drag(e) {
       DraggingHourHand = true;
       let newTime = new Date(customTime || new Date());
 
-      console.log((currentAngle + 360) % 360);
+      //*console.log((currentAngle + 360) % 360);
 
       // 计算拖拽后的小时数，并更新小时
       hours = Math.floor((((currentAngle + 360) % 360) / 30) % 12);
@@ -183,7 +183,7 @@ function drag(e) {
         hours += 12;
       }
 
-      console.log(hours);
+      //*console.log(hours);
 
       let correctedMinuteAngle = (((currentAngle + 360) % 360) - (hours % 12) * 30) * 12;
 
@@ -192,7 +192,7 @@ function drag(e) {
       newTime.setHours(hours);
       newTime.setMinutes(minutes);
       customTime = newTime.getTime();
-      console.log(new Date(customTime).getHours());
+      //*console.log(new Date(customTime).getHours());
 
       // 更新分针的角度
       const minuteHand = document.getElementById('minute-hand-group');
@@ -239,19 +239,15 @@ document.addEventListener('mouseup', stopDrag);
 
 
 // 秒表功能
-let stopwatchInterval;
-let stopwatchStartTime;
-let stopwatchElapsedTime = 0;
-
-let stopwatchLapStartTime;
-let stopwatchLapElapsedTime = 0;
+let stopwatchInterval;//setInterval返回的id
+let stopwatchStartTime;//开始计时的时间（可能经过了等效转换）
+let stopwatchElapsedTime = 0;//秒表总计时时长
 
 function startStopwatch() {
   if (stopwatchInterval) {
     clearInterval(stopwatchInterval);
   }
   stopwatchStartTime = Date.now() - stopwatchElapsedTime;
-  stopwatchLapStartTime = Date.now() - stopwatchLapElapsedTime;
   stopwatchInterval = setInterval(updateStopwatch, 10); // 每 10 毫秒更新一次
 }
 
@@ -259,81 +255,65 @@ function stopStopwatch() {
   clearInterval(stopwatchInterval);
 }
 
-let laps = [];
+let splits = [];
 
-function updateLapList() {
-  const lap_list = document.getElementById('lap-list');
-  lap_list.innerHTML = '';
+function updateSplitList() {
+  const split_list = document.getElementById('lap-list');
+  split_list.innerHTML = '';
 
-  laps.forEach((lap, index) => {
+  splits.forEach((split, index) => {
     index++;
 
-    const centiseconds = Math.floor(lap.time.getMilliseconds() / 10); // Get centiseconds
+    const centiseconds = Math.floor(split.time.getMilliseconds() / 10); // Get centiseconds
     const centisecondsString = centiseconds.toString().padStart(2, '0'); // Convert to string and pad with '0'
-    const timeString = `${lap.time.getHours().toString().padStart(2, '0')}:${lap.time.getMinutes().toString().padStart(2, '0')}:${lap.time.getSeconds().toString().padStart(2, '0')}:${centisecondsString}`;
+    const timeString = `${split.time.getHours().toString().padStart(2, '0')}:${split.time.getMinutes().toString().padStart(2, '0')}:${split.time.getSeconds().toString().padStart(2, '0')}.${centisecondsString}`;
 
-    const lapDisplayString = `Lap ${index}: ${timeString}`;
+    const splitDisplayString = `Split ${index}: ${timeString}`;
 
     const li = document.createElement('li');
-    li.innerHTML = `${lapDisplayString}`
+    li.innerHTML = `${splitDisplayString}`;
 
-    lap_list.appendChild(li);
+    split_list.appendChild(li);
   });
 }
 
-
-
-
-function lapStopwatch() {
+function splitStopwatch() {
   if (stopwatchElapsedTime == 0) {
     return;
   }
 
-
-  const totalSeconds = Math.floor(stopwatchLapElapsedTime / 1000);
+  const totalSeconds = Math.floor(stopwatchElapsedTime / 1000);
   const hours = Math.floor(totalSeconds / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
-  const centiseconds = Math.floor((stopwatchLapElapsedTime % 1000) / 10); // 百分之一秒
+  const centiseconds = Math.floor((stopwatchElapsedTime % 1000) / 10); // 百分之一秒
 
-  const lapTime = new Date();
-  lapTime.setHours(hours, minutes, seconds, centiseconds * 10);
+  const splitTime = new Date();
+  splitTime.setHours(hours, minutes, seconds, centiseconds * 10);
 
-  const lapNum = laps.length;
+  const splitNum = splits.length;
 
-  const lap = {
-    time: lapTime,
-    index: lapNum
+  const split = {
+    time: splitTime,
+    index: splitNum
   };
-  laps.push(lap);
-  updateLapList();
-
-  stopwatchLapElapsedTime = 0;
-  stopwatchLapStartTime = Date.now() - stopwatchLapElapsedTime;
+  splits.push(split);
+  updateSplitList();
 }
 
 function resetStopwatch() {
   clearInterval(stopwatchInterval);
   stopwatchElapsedTime = 0;
-  document.getElementById('stopwatch-display').textContent = '00:00:00:00';
+  document.getElementById('stopwatch-display').textContent = '00:00:00.00';
 
-  while (laps.length) {
-    laps.pop();
+  while (splits.length) {
+    splits.pop();
   }
-  updateLapList();
-
+  updateSplitList();
 }
 
 function updateStopwatch() {
-  if (!stopwatchInterval) {
-    const hoursString = String(hours).padStart(2, '0');
-    const minutesString = String(minutes).padStart(2, '0');
-    const secondsString = String(Math.floor(secondsPlusMilliseconds)).padStart(2, '0');
-    document.getElementById('digital-clock').textContent = `${hoursString}:${minutesString}:${secondsString}`;
-  }
-
   stopwatchElapsedTime = Date.now() - stopwatchStartTime;
-  stopwatchLapElapsedTime = Date.now() - stopwatchLapStartTime;
   const totalSeconds = Math.floor(stopwatchElapsedTime / 1000);
   const hours = Math.floor(totalSeconds / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
@@ -344,12 +324,12 @@ function updateStopwatch() {
   const minutesString = String(minutes).padStart(2, '0');
   const secondsString = String(seconds).padStart(2, '0');
   const centisecondsString = String(centiseconds).padStart(2, '0');
-  document.getElementById('stopwatch-display').textContent = `${hoursString}:${minutesString}:${secondsString}:${centisecondsString}`;
+  document.getElementById('stopwatch-display').textContent = `${hoursString}:${minutesString}:${secondsString}.${centisecondsString}`;
 }
 
 document.getElementById('start-stopwatch').addEventListener('click', startStopwatch);
 document.getElementById('stop-stopwatch').addEventListener('click', stopStopwatch);
-document.getElementById('lap-stopwatch').addEventListener('click', lapStopwatch);
+document.getElementById('split-stopwatch').addEventListener('click', splitStopwatch);
 document.getElementById('reset-stopwatch').addEventListener('click', resetStopwatch);
 
 // 参数输入设置时间
@@ -400,8 +380,11 @@ function updateAlarmList() {
   list.innerHTML = '';
   alarms.forEach((alarm, index) => {
     const timeString = `${alarm.time.getHours().toString().padStart(2, '0')}:${alarm.time.getMinutes().toString().padStart(2, '0')}:${alarm.time.getSeconds().toString().padStart(2, '0')}`;
-    const li = document.createElement('li');
-    li.innerHTML = `${timeString} <button onclick="toggleAlarm(${index})">${alarm.enabled ? '关闭' : '开启'}</button> <button onclick="deleteAlarm(${index})">删除</button>`;
+    let li = document.createElement('li');
+    li.innerHTML = `<span>${timeString}</span> <button onclick="toggleAlarm(${index})">${alarm.enabled ? '关闭' : '开启'}</button> <button onclick="deleteAlarm(${index})">删除</button>`;
+    if (alarm.enabled === false) {
+      li.childNodes[0].style.textDecoration = 'line-through';
+    }
     list.appendChild(li);
   });
   document.getElementById('alarm-sound').pause();
@@ -459,18 +442,46 @@ document.getElementById('sync').addEventListener('click', function (event) {
 // 倒计时功能
 let countdownInterval;
 let countdownTime;
+let modal = document.getElementById("setCountdownModal");
+let btnSet = document.getElementById("set-countdown");
+let span = document.getElementsByClassName("close")[0];
+let btnSave = document.getElementById("save-time");
 
-function startCountdown() {
-  const hours = parseInt(document.getElementById('inputhour').value, 10);
-  const minutes = parseInt(document.getElementById('inputminute').value, 10);
-  const seconds = parseInt(document.getElementById('inputsecond').value, 10);
+btnSet.onclick = function () {
+  modal.style.display = "block";
+}
 
-  if (!isNaN(hours) && !isNaN(minutes) && !isNaN(seconds) && hours >= 0 && minutes >= 0 && seconds >= 0) {
-    countdownTime = (hours * 3600 + minutes * 60 + seconds) * 1000;
-    if (countdownInterval) clearInterval(countdownInterval);
-    countdownInterval = setInterval(updateCountdown, 1000);
+span.onclick = function () {
+  modal.style.display = "none";
+}
+
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+btnSave.onclick = function () {
+  const hours = parseInt(document.getElementById('input_hour').value, 10);
+  const minutes = parseInt(document.getElementById('input_minute').value, 10);
+  const seconds = parseInt(document.getElementById('input_second').value, 10);
+  const centiseconds = parseInt(document.getElementById('input_centisecond').value, 10);
+
+  if (!isNaN(hours) && !isNaN(minutes) && !isNaN(seconds) && !isNaN(centiseconds)) {
+    countdownTime = (hours * 3600 + minutes * 60 + seconds) * 1000 + centiseconds * 10;
+    updateDisplay(hours, minutes, seconds, centiseconds);
+    modal.style.display = "none";
   } else {
     alert('请输入有效的时间');
+  }
+}
+
+function startCountdown() {
+  if (countdownTime > 0) {
+    if (countdownInterval) clearInterval(countdownInterval);
+    countdownInterval = setInterval(updateCountdown, 10);
+  } else {
+    alert('请先设置时间');
   }
 }
 
@@ -481,27 +492,34 @@ function stopCountdown() {
 function resetCountdown() {
   clearInterval(countdownInterval);
   countdownTime = 0;
-  document.getElementById('countdown-display').textContent = '00:00:00';
+  document.getElementById('countdown-display').textContent = '00:00:00.00';
 }
 
 function updateCountdown() {
   if (countdownTime <= 0) {
     clearInterval(countdownInterval);
-    document.getElementById('countdown-display').textContent = '00:00:00';
+    document.getElementById('countdown-display').textContent = '00:00:00.00';
     alert('倒计时结束');
     return;
   }
 
-  countdownTime -= 1000;
-  const totalSeconds = Math.floor(countdownTime / 1000);
+  countdownTime -= 10;
+  const totalMilliseconds = countdownTime;
+  const totalSeconds = Math.floor(totalMilliseconds / 1000);
   const hours = Math.floor(totalSeconds / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
+  const centiseconds = Math.floor((totalMilliseconds % 1000) / 10);
 
+  updateDisplay(hours, minutes, seconds, centiseconds);
+}
+
+function updateDisplay(hours, minutes, seconds, centiseconds) {
   const hoursString = String(hours).padStart(2, '0');
   const minutesString = String(minutes).padStart(2, '0');
   const secondsString = String(seconds).padStart(2, '0');
-  document.getElementById('countdown-display').textContent = `${hoursString}:${minutesString}:${secondsString}`;
+  const centisecondsString = String(centiseconds).padStart(2, '0');
+  document.getElementById('countdown-display').textContent = `${hoursString}:${minutesString}:${secondsString}.${centisecondsString}`;
 }
 
 document.getElementById('start-countdown').addEventListener('click', startCountdown);
